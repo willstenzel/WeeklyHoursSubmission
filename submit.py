@@ -15,6 +15,7 @@ driver.find_element_by_id('Skin_ctl08_LoginPasswordText').send_keys(os.environ.g
 driver.find_element_by_name('Skin$ctl08$ctl14').click()
 
 driver.find_element_by_xpath('//*[@title="Co-op Research Assistant"]').click()
+
 try:
     driver.find_element_by_xpath('//*[@title="Start time sheet"]').click()
 except NoSuchElementException:
@@ -22,27 +23,58 @@ except NoSuchElementException:
 
 # browser.switchTo().alert().accept()
 driver.find_element_by_tag_name('body').send_keys(Keys.ENTER)
-driver.find_element_by_xpath('//*[@title="Add a New Entry"]').click()
-
-day_select = driver.find_element_by_id('Skin_body_ctl01_WDL')
-for option in day_select.find_elements_by_tag_name('option'):
-    if "Monday" in option.text:
-        option.click()
-        break
-
-start_time_select = driver.find_element_by_id('Skin_body_ctl01_StartDateTime1')
-for option in start_time_select.find_elements_by_tag_name('option'):
-    if "8:45AM" in option.text:
-        option.click()
-        break
-
-end_time_select = driver.find_element_by_id('Skin_body_ctl01_EndDateTime1')
-for option in end_time_select.find_elements_by_tag_name('option'):
-    if "12:00PM" in option.text:
-        option.click()
-        break
-
-driver.find_element_by_xpath("//input[@type='submit']").click()
 
 
+weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+
+for weekday in weekdays:
+
+    driver.find_element_by_xpath('//*[@title="Add a New Entry"]').click()
+
+    day_select = driver.find_element_by_id('Skin_body_ctl01_WDL')
+    for option in day_select.find_elements_by_tag_name('option'):
+        if weekday in option.text:
+            option.click()
+            break
+
+    start_time_select = driver.find_element_by_id('Skin_body_ctl01_StartDateTime1')
+    for option in start_time_select.find_elements_by_tag_name('option'):
+        if "8:45AM" in option.text:
+            option.click()
+            break
+
+    end_time_select = driver.find_element_by_id('Skin_body_ctl01_EndDateTime1')
+    for option in end_time_select.find_elements_by_tag_name('option'):
+        if "12:00PM" in option.text:
+            option.click()
+            break
+
+    driver.find_element_by_xpath("//input[@type='submit']").click()
+
+    driver.find_element_by_xpath('//*[@title="Add a New Entry"]').click()
+
+    day_select = driver.find_element_by_id('Skin_body_ctl01_WDL')
+    for option in day_select.find_elements_by_tag_name('option'):
+        if weekday in option.text:
+            option.click()
+            break
+
+    start_time_select = driver.find_element_by_id('Skin_body_ctl01_StartDateTime1')
+    for option in start_time_select.find_elements_by_tag_name('option'):
+        if "12:30PM" in option.text:
+            option.click()
+            break
+
+    end_time_select = driver.find_element_by_id('Skin_body_ctl01_EndDateTime1')
+    for option in end_time_select.find_elements_by_tag_name('option'):
+        if "5:15PM" in option.text:
+            option.click()
+            break
+
+    driver.find_element_by_xpath("//input[@type='submit']").click()
+
+
+driver.find_element_by_xpath('//a[contains(@href, "ConfirmTimesheet")]').click()
+
+time.sleep(160)
 driver.quit()
