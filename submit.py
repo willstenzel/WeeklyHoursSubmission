@@ -18,12 +18,10 @@ driver.find_element_by_xpath('//*[@title="Co-op Research Assistant"]').click()
 
 try:
     driver.find_element_by_xpath('//*[@title="Start time sheet"]').click()
+    time.sleep(5)
+    driver.switch_to.alert.accept()
 except NoSuchElementException:
     driver.find_element_by_xpath('//*[@title="Go to time sheet"]').click()
-
-# browser.switchTo().alert().accept()
-driver.find_element_by_tag_name('body').send_keys(Keys.ENTER)
-
 
 weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
@@ -76,5 +74,13 @@ for weekday in weekdays:
 
 driver.find_element_by_xpath('//a[contains(@href, "ConfirmTimesheet")]').click()
 
+total_hours = driver.find_element_by_class_name("tsTotals").text
+if "40 hrs" in total_hours:
+    driver.find_element_by_id("Skin_body_SubmitButton").click()
+    time.sleep(5)
+    driver.switch_to.alert.accept()
+else:
+    print("The weekly hours did not total up to 40")
+
 time.sleep(160)
-driver.quit()
+#driver.quit()
